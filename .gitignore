@@ -1,0 +1,11 @@
+.DS_Store
+Thumbs.db
+.vscode/
+*.log
+*.cache
+*.diff
+*.exe
+*.exe~
+*.patch
+*.swp
+*.tmp
