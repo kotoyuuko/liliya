@@ -9,3 +9,4 @@ Thumbs.db
 *.patch
 *.swp
 *.tmp
+src/
