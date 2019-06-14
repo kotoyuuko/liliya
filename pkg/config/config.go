@@ -1,8 +1,6 @@
 package config
 
 import (
-	"reflect"
-
 	"github.com/Unknwon/goconfig"
 )
 
@@ -45,14 +43,6 @@ func (f *File) Default(defaultVal interface{}) *File {
 	return f
 }
 
-func isNil(i interface{}) bool {
-	vi := reflect.ValueOf(i)
-	if vi.Kind() == reflect.Ptr {
-		return vi.IsNil()
-	}
-	return false
-}
-
 func (f *File) sectionSet() bool {
 	return f.section != ""
 }
@@ -62,7 +52,7 @@ func (f *File) keySet() bool {
 }
 
 func (f *File) defaultSet() bool {
-	return !isNil(f.defaultVal)
+	return f.defaultVal != nil
 }
 
 // String always returns string value without error
