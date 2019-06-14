@@ -1,0 +1,4 @@
+github.com/Unknwon/goconfig v0.0.0-20190425194916-3dba17dd7b9e h1:ZaFHdRwv6wJQMYsg5qITIsqWRqZRvUETiq0xxrl+8fc=
+github.com/Unknwon/goconfig v0.0.0-20190425194916-3dba17dd7b9e/go.mod h1:wngxua9XCNjvHjDiTiV26DaKDT+0c63QR6H5hjVUUxw=
+github.com/urfave/cli v1.20.0 h1:fDqGv3UG/4jbVl/QkFwEdddtEDjh/5Ov6X+0B/3bPaw=
+github.com/urfave/cli v1.20.0/go.mod h1:70zkFmudgCuE/ngEzBv17Jvp/497gISqfk5gWijbERA=
