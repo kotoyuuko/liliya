@@ -6,6 +6,12 @@ Liliya 是一套 Go 微服务框架，基于 Gin 和 GORM。包含 `liliya` 命�
 
 ## 快速开始
 
+### 设置环境变量
+
+先在 `.zshrc` 里写入：
+
+    export GO111MODULE=on
+
 ### 获取 liliya 命令行工具
 
     go install github.com/kotoyuuko/liliya/tool/liliya
