@@ -13,15 +13,20 @@ type Template struct {
 	Content string
 }
 
-func createFileFromTemplate(tpl Template) error {
-	filePath := path.Join(project.Path, tpl.Path)
+func replaceTargetPath() string {
 	goPath := os.Getenv("GOPATH")
 	goSrcPath := path.Join(goPath, "src")
 	targetPath := strings.Replace(project.Path, goSrcPath, "", 1)
 	targetPath = strings.Trim(targetPath, "/")
 	targetPath = path.Join(targetPath, "src")
 
-	content := strings.Replace(tpl.Content, "github.com/kotoyuuko/liliya/src", targetPath, -1)
+	return targetPath
+}
+
+func createFileFromTemplate(tpl Template) error {
+	filePath := path.Join(project.Path, tpl.Path)
+
+	content := strings.Replace(tpl.Content, "github.com/kotoyuuko/liliya/src", replaceTargetPath(), -1)
 
 	return ioutil.WriteFile(filePath, []byte(content), 0644)
 }
@@ -273,3 +278,26 @@ func main() {
 }
 `,
 }
+
+var tplService = `package service
+
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
+func Hello(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, gin.H{
+		"status": http.StatusOK,
+	})
+}
+`
+var tplModel = `package model
+
+import "github.com/kotoyuuko/liliya/pkg/model"
+
+type {model} struct {
+	model.CommonFields
+}
+`

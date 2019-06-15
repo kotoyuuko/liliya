@@ -41,6 +41,8 @@ func runMake(ctx *cli.Context) error {
 		return err
 	}
 
+	fmt.Println(file.Type, file.Name, "created.")
+
 	return nil
 }
 
