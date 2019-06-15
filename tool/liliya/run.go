@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"path"
 
@@ -20,6 +21,8 @@ func runCreate(ctx *cli.Context) error {
 	if err := createProject(); err != nil {
 		return err
 	}
+
+	fmt.Println("project created.")
 
 	return nil
 }
