@@ -33,6 +33,10 @@ func createProject() error {
 		return err
 	}
 
+	if err := createLogPath(); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -80,6 +84,20 @@ func createDatabasePath() error {
 	}
 
 	if err := createFileFromTemplate(tplDatabaseSeeder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func createLogPath() error {
+	logPath := path.Join(project.Path, "src/log")
+
+	if err := os.MkdirAll(logPath, 0755); err != nil {
+		return err
+	}
+
+	if err := createGitkeep(logPath); err != nil {
 		return err
 	}
 
