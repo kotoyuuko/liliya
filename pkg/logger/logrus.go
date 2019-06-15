@@ -2,6 +2,7 @@ package logger
 
 import (
 	"io"
+	"os"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -86,6 +87,28 @@ func Panic(message string, fields ...logrus.Fields) {
 	} else {
 		log.Panic(message)
 	}
+}
+
+// Init init logger for application
+func Init(filePath, runMode string) error {
+	dst, err := os.OpenFile(filePath, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+	if err != nil {
+		return err
+	}
+
+	SetOutput(dst)
+	if runMode == "debug" {
+		SetFormatter(&logrus.JSONFormatter{})
+		SetLevel(logrus.DebugLevel)
+	} else if runMode == "release" {
+		SetFormatter(&logrus.TextFormatter{})
+		SetLevel(logrus.WarnLevel)
+	} else {
+		SetFormatter(&logrus.JSONFormatter{})
+		SetLevel(logrus.InfoLevel)
+	}
+
+	return nil
 }
 
 // Logger returns a logger for gin framework
