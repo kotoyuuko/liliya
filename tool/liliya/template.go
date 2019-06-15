@@ -2,7 +2,9 @@ package main
 
 import (
 	"io/ioutil"
+	"os"
 	"path"
+	"strings"
 )
 
 // Template is the template of source code file
@@ -13,8 +15,15 @@ type Template struct {
 
 func createFileFromTemplate(tpl Template) error {
 	filePath := path.Join(project.Path, tpl.Path)
+	goPath := os.Getenv("GOPATH")
+	goSrcPath := path.Join(goPath, "src")
+	targetPath := strings.Replace(project.Path, goSrcPath, "", 1)
+	targetPath = strings.Trim(targetPath, "/")
+	targetPath = path.Join(targetPath, "src")
 
-	return ioutil.WriteFile(filePath, []byte(tpl.Content), 0644)
+	content := strings.Replace(tpl.Content, "github.com/kotoyuuko/liliya/src", targetPath, -1)
+
+	return ioutil.WriteFile(filePath, []byte(content), 0644)
 }
 
 var tplGitignore = Template{
