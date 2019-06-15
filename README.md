@@ -90,6 +90,14 @@ Liliya 使用了 GORM，可以通过下面方法获取到数据库实例：
 
 具体的数据库操作参照 GORM 官方文档。
 
+### Log
+
+Liliya 使用 logrus 处理日志，程序内调用方法如下：
+
+    import "github.com/kotoyuuko/liliya/pkg/logger"
+
+    logger.Info("test")
+
 ## License
 
 The Unlicense
