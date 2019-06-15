@@ -123,7 +123,7 @@ func Logger() gin.HandlerFunc {
 		method := ctx.Request.Method
 		statusCode := ctx.Writer.Status()
 
-		log.Infof("| %3d | %13v | %15s | %s  %s |",
+		log.Infof("[%3d] %13v %15s - %s  %s",
 			statusCode,
 			latency,
 			clientIP,
