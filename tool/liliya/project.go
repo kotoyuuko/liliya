@@ -37,6 +37,10 @@ func createProject() error {
 		return err
 	}
 
+	if err := createModelPath(); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -98,6 +102,24 @@ func createLogPath() error {
 	}
 
 	if err := createGitkeep(logPath); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func createModelPath() error {
+	modelPath := path.Join(project.Path, "src/model")
+
+	if err := os.MkdirAll(modelPath, 0755); err != nil {
+		return err
+	}
+
+	if err := createGitkeep(modelPath); err != nil {
+		return err
+	}
+
+	if err := createFileFromTemplate(tplModelUser); err != nil {
 		return err
 	}
 

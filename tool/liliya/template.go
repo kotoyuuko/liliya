@@ -104,3 +104,19 @@ func userSeeder() {
 }
 `,
 }
+
+var tplModelUser = Template{
+	Path: "src/model/user.go",
+	Content: `package model
+
+import "github.com/kotoyuuko/liliya/pkg/model"
+
+// User contains user information
+type User struct {
+	model.CommonFields
+	Name     string ` + "`" + `json:"name"` + "`" + `
+	Password string ` + "`" + `json:"-"` + "`" + `
+	Role     string ` + "`" + `json:"role" gorm:"type:enum('user', 'admin')"` + "`" + `
+}
+`,
+}
