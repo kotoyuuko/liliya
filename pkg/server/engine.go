@@ -5,9 +5,9 @@ import "github.com/gin-gonic/gin"
 type router func(*gin.Engine) *gin.Engine
 
 // Engine returns gin.Engine
-func Engine(r router, runMode string) *gin.Engine {
+func Engine(r router, logger gin.HandlerFunc, runMode string) *gin.Engine {
 	engine := gin.New()
-	engine.Use(gin.Logger())
+	engine.Use(logger)
 	engine.Use(gin.Recovery())
 
 	if runMode == "debug" {

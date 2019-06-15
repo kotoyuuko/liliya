@@ -2,7 +2,9 @@ package logger
 
 import (
 	"io"
+	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )
 
@@ -83,5 +85,27 @@ func Panic(message string, fields ...logrus.Fields) {
 		log.WithFields(fields[0]).Panic(message)
 	} else {
 		log.Panic(message)
+	}
+}
+
+// Logger returns a logger for gin framework
+func Logger() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		start := time.Now()
+		ctx.Next()
+		end := time.Now()
+		latency := end.Sub(start)
+		path := ctx.Request.URL.Path
+		clientIP := ctx.ClientIP()
+		method := ctx.Request.Method
+		statusCode := ctx.Writer.Status()
+
+		log.Infof("| %3d | %13v | %15s | %s  %s |",
+			statusCode,
+			latency,
+			clientIP,
+			method,
+			path,
+		)
 	}
 }
