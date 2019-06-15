@@ -27,6 +27,10 @@ func createProject() error {
 	return nil
 }
 
+func createGitignore() error {
+	return createFileFromTemplate(tplGitignore)
+}
+
 func createConfigPath() error {
 	configPath := path.Join(project.Path, "src/config")
 
