@@ -41,6 +41,10 @@ func createProject() error {
 		return err
 	}
 
+	if err := createRouterPath(); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -120,6 +124,24 @@ func createModelPath() error {
 	}
 
 	if err := createFileFromTemplate(tplModelUser); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func createRouterPath() error {
+	routerPath := path.Join(project.Path, "src/router")
+
+	if err := os.MkdirAll(routerPath, 0755); err != nil {
+		return err
+	}
+
+	if err := createGitkeep(routerPath); err != nil {
+		return err
+	}
+
+	if err := createFileFromTemplate(tplRouterRoutes); err != nil {
 		return err
 	}
 

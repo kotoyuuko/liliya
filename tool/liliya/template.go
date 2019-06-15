@@ -120,3 +120,21 @@ type User struct {
 }
 `,
 }
+
+var tplRouterRoutes = Template{
+	Path: "src/router/routes.go",
+	Content: `package router
+
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/kotoyuuko/liliya/src/service"
+)
+
+// Router return routes of application
+func Router(r *gin.Engine) *gin.Engine {
+	r.GET("/", service.Root)
+
+	return r
+}
+`,
+}
