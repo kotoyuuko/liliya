@@ -14,6 +14,10 @@ Liliya 是一套 Go 微服务框架，基于 Gin 和 GORM。包含 `liliya` 命�
 
     export GO111MODULE=on
 
+关于 Go Modules 的具体用法，可以看这里：
+
+[juejin.im/post/5c8e503a6fb9a070d878184a](https://juejin.im/post/5c8e503a6fb9a070d878184a)
+
 ### 获取 liliya 命令行工具
 
     go install github.com/kotoyuuko/liliya/tool/liliya
