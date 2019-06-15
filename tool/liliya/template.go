@@ -224,3 +224,43 @@ func init() {
 }
 `,
 }
+
+var tplMain = Template{
+	Path: "src/main.go",
+	Content: `package main
+
+import (
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/kotoyuuko/liliya/pkg/logger"
+	"github.com/kotoyuuko/liliya/pkg/server"
+	"github.com/kotoyuuko/liliya/src/database"
+	"github.com/kotoyuuko/liliya/src/router"
+	"github.com/kotoyuuko/liliya/src/util/config"
+)
+
+func main() {
+	runMode := config.App("runMode").Default("release").String()
+
+	if err := logger.Init("./log/app.log", runMode); err != nil {
+		panic(err)
+	}
+
+	database.Migrate()
+	database.Seed()
+
+	engine := server.Engine(router.Router, logger.Logger(), runMode)
+
+	httpAddr := config.Server("httpAddr").Default("127.0.0.1:7000").String()
+	readTimeout := config.Server("readTimeout").Default(10).Int()
+	writeTimeout := config.Server("writeTimeout").Default(10).Int()
+	httpServer := server.Server{
+		Engine:       engine,
+		Addr:         httpAddr,
+		ReadTimeout:  readTimeout,
+		WriteTimeout: writeTimeout,
+	}
+
+	httpServer.Serve()
+}
+`,
+}

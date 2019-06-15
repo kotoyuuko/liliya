@@ -53,6 +53,10 @@ func createProject() error {
 		return err
 	}
 
+	if err := createFileFromTemplate(tplMain); err != nil {
+		return err
+	}
+
 	return nil
 }
 
