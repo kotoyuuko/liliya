@@ -45,6 +45,10 @@ func createProject() error {
 		return err
 	}
 
+	if err := createServicePath(); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -142,6 +146,24 @@ func createRouterPath() error {
 	}
 
 	if err := createFileFromTemplate(tplRouterRoutes); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func createServicePath() error {
+	servicePath := path.Join(project.Path, "src/service")
+
+	if err := os.MkdirAll(servicePath, 0755); err != nil {
+		return err
+	}
+
+	if err := createGitkeep(servicePath); err != nil {
+		return err
+	}
+
+	if err := createFileFromTemplate(tplServiceRoot); err != nil {
 		return err
 	}
 

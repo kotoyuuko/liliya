@@ -138,3 +138,22 @@ func Router(r *gin.Engine) *gin.Engine {
 }
 `,
 }
+
+var tplServiceRoot = Template{
+	Path: "src/service/root.go",
+	Content: `package service
+
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
+// Root is the processor for root page
+func Root(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, gin.H{
+		"status": http.StatusOK,
+	})
+}
+`,
+}
