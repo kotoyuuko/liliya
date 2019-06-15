@@ -91,7 +91,7 @@ func Panic(message string, fields ...logrus.Fields) {
 
 // Init init logger for application
 func Init(filePath, runMode string) error {
-	dst, err := os.OpenFile(filePath, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+	dst, err := os.OpenFile(filePath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	if err != nil {
 		return err
 	}
