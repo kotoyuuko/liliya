@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io/ioutil"
 	"os"
 	"path"
 )
@@ -20,11 +21,25 @@ func createProject() error {
 		return err
 	}
 
+	if err := createGitignore(); err != nil {
+		return err
+	}
+
 	if err := createConfigPath(); err != nil {
 		return err
 	}
 
+	if err := createDatabasePath(); err != nil {
+		return err
+	}
+
 	return nil
+}
+
+func createGitkeep(folder string) error {
+	filePath := path.Join(folder, ".gitkeep")
+
+	return ioutil.WriteFile(filePath, []byte(""), 0644)
 }
 
 func createGitignore() error {
@@ -38,7 +53,33 @@ func createConfigPath() error {
 		return err
 	}
 
+	if err := createGitkeep(configPath); err != nil {
+		return err
+	}
+
 	if err := createFileFromTemplate(tplConfigAppIni); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func createDatabasePath() error {
+	databasePath := path.Join(project.Path, "src/database")
+
+	if err := os.MkdirAll(databasePath, 0755); err != nil {
+		return err
+	}
+
+	if err := createGitkeep(databasePath); err != nil {
+		return err
+	}
+
+	if err := createFileFromTemplate(tplDatabaseMigration); err != nil {
+		return err
+	}
+
+	if err := createFileFromTemplate(tplDatabaseSeeder); err != nil {
 		return err
 	}
 
