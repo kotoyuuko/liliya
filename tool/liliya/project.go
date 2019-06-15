@@ -49,6 +49,10 @@ func createProject() error {
 		return err
 	}
 
+	if err := createUtilPath(); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -164,6 +168,64 @@ func createServicePath() error {
 	}
 
 	if err := createFileFromTemplate(tplServiceRoot); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func createUtilPath() error {
+	utilPath := path.Join(project.Path, "src/util")
+
+	if err := os.MkdirAll(utilPath, 0755); err != nil {
+		return err
+	}
+
+	if err := createGitkeep(utilPath); err != nil {
+		return err
+	}
+
+	if err := createUtilConfigPath(); err != nil {
+		return err
+	}
+
+	if err := createUtilDAOPath(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func createUtilConfigPath() error {
+	utilConfigPath := path.Join(project.Path, "src/util/config")
+
+	if err := os.MkdirAll(utilConfigPath, 0755); err != nil {
+		return err
+	}
+
+	if err := createGitkeep(utilConfigPath); err != nil {
+		return err
+	}
+
+	if err := createFileFromTemplate(tplUtilConfig); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func createUtilDAOPath() error {
+	utilDAOPath := path.Join(project.Path, "src/util/dao")
+
+	if err := os.MkdirAll(utilDAOPath, 0755); err != nil {
+		return err
+	}
+
+	if err := createGitkeep(utilDAOPath); err != nil {
+		return err
+	}
+
+	if err := createFileFromTemplate(tplUtilDAO); err != nil {
 		return err
 	}
 

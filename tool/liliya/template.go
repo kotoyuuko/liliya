@@ -157,3 +157,70 @@ func Root(ctx *gin.Context) {
 }
 `,
 }
+
+var tplUtilConfig = Template{
+	Path: "src/util/config/config.go",
+	Content: `package config
+
+import "github.com/kotoyuuko/liliya/pkg/config"
+
+var cfg *config.File
+
+func init() {
+	var err error
+	cfg, err = config.Load("./config/app.ini")
+	if err != nil {
+		panic(err)
+	}
+}
+
+// App returns value in app section of config file
+func App(key string) *config.File {
+	return cfg.Section("app").Key(key)
+}
+
+// Server returns value in server section of config file
+func Server(key string) *config.File {
+	return cfg.Section("server").Key(key)
+}
+
+// Database returns value in database section of config file
+func Database(key string) *config.File {
+	return cfg.Section("database").Key(key)
+}
+`,
+}
+
+var tplUtilDAO = Template{
+	Path: "src/util/dao/dao.go",
+	Content: `package dao
+
+import (
+	"github.com/jinzhu/gorm"
+	"github.com/kotoyuuko/liliya/pkg/database"
+	"github.com/kotoyuuko/liliya/pkg/logger"
+	"github.com/kotoyuuko/liliya/src/util/config"
+)
+
+// DB is the global database instance
+var DB *gorm.DB
+
+func init() {
+	var err error
+
+	dialect := config.Database("type").Default("mysql").String()
+	host := config.Database("host").String()
+	user := config.Database("user").String()
+	password := config.Database("password").String()
+	name := config.Database("name").String()
+	timezone := config.App("timezone").Default("UTC").String()
+
+	args := database.ArgsString(host, user, password, name, timezone)
+
+	DB, err = database.Connect(dialect, args)
+	if err != nil {
+		logger.Warn("Cannot connect to database")
+	}
+}
+`,
+}
