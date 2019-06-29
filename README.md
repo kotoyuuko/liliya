@@ -24,10 +24,15 @@ Liliya 是一套 Go 微服务框架，基于 Gin 和 GORM。包含 `liliya` 命�
 
 ### 创建项目
 
-> 必须在 `$GOPATH/src` 的子目录使用，否则会出错。
+> 必须在 `$GOPATH/src` 的子目录使用，否则依赖包路径会出错。
 
     cd $GOPATH/src/github.com/kotoyuuko
     liliya create liliya-demo
+
+### 初始化 Go Mod
+
+    cd liliya-demo/src
+    go mod init
 
 ### 生成 Service
 
@@ -38,6 +43,11 @@ Liliya 是一套 Go 微服务框架，基于 Gin 和 GORM。包含 `liliya` 命�
 
     cd liliya-demo
     liliya make model test
+
+### 运行
+
+    cd liliya-demo/src
+    go run main.go
 
 ## 使用文档
 
